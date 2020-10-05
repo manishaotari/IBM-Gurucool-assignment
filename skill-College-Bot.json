@@ -1,0 +1,463 @@
+{
+  "intents": [
+    {
+      "intent": "College_Info",
+      "examples": [
+        {
+          "text": "Hello, How many departments in college?"
+        },
+        {
+          "text": "how can I book the room in a hostel?"
+        },
+        {
+          "text": "where is canteen"
+        },
+        {
+          "text": "Where is library?"
+        },
+        {
+          "text": "Who is hod of CSE department"
+        },
+        {
+          "text": "Who is Principal of college"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "Greetings",
+      "examples": [
+        {
+          "text": "Good Afternoon"
+        },
+        {
+          "text": "Good Evening"
+        },
+        {
+          "text": "Good morning"
+        },
+        {
+          "text": "Hello"
+        },
+        {
+          "text": "Hi"
+        }
+      ],
+      "description": ""
+    }
+  ],
+  "entities": [
+    {
+      "entity": "collegeinfo",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "book the room in hostel",
+          "synonyms": [
+            "boys hostel",
+            "room"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "canteen",
+          "synonyms": [
+            "cafeteria",
+            "kitchen",
+            "lunchroom"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "departments",
+          "synonyms": [
+            "dept",
+            "Engineering branches"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "hod cse",
+          "synonyms": [
+            "cse head",
+            "Head of department of cse"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "library",
+          "synonyms": [
+            "college library"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "prinipal",
+          "synonyms": [
+            "college principal",
+            "head of institute"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "greetings",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Good Affternoon",
+          "synonyms": [
+            "Gd. Aft"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Good Evening",
+          "synonyms": [
+            "ge"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Good Morning",
+          "synonyms": [
+            "gm"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Hello",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Hi",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    }
+  ],
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2018-11-08"
+    }
+  },
+  "dialog_nodes": [
+    {
+      "type": "standard",
+      "title": "Anything else",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I didn't understand. You can try rephrasing."
+              },
+              {
+                "text": "Can you reword your statement? I'm not understanding."
+              },
+              {
+                "text": "I didn't get your meaning."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "dialog_node": "Anything else",
+      "previous_sibling": "node_2_1601879470350",
+      "disambiguation_opt_out": true
+    },
+    {
+      "type": "standard",
+      "title": "College Info",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "#College_Info || @collegeinfo",
+      "dialog_node": "node_2_1601879470350",
+      "previous_sibling": "node_4_1601878425269"
+    },
+    {
+      "type": "standard",
+      "title": "Greetings",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "#Greetings || @greetings",
+      "dialog_node": "node_4_1601878425269",
+      "previous_sibling": "Welcome"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Good Afternoon"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1601878425269",
+      "conditions": "@greetings:(Good Affternoon)",
+      "dialog_node": "response_10_1601878667315",
+      "previous_sibling": "response_5_1601878612578"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "College library is in B Building"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_2_1601879470350",
+      "conditions": "@collegeinfo:library",
+      "dialog_node": "response_1_1601879794486",
+      "previous_sibling": "response_5_1601879674262"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hod cse is Dr. Raut S.D"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_2_1601879470350",
+      "conditions": "@collegeinfo:(hod cse)",
+      "dialog_node": "response_4_1601879832772",
+      "previous_sibling": "response_1_1601879794486"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Good Morning"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1601878425269",
+      "conditions": "@greetings:(Good Morning)",
+      "dialog_node": "response_5_1601878612578"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hello"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1601878425269",
+      "conditions": "@greetings:Hi",
+      "dialog_node": "response_5_1601878763608",
+      "previous_sibling": "response_8_1601878696014"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "to book the room in Girls hostel, please contact Mr. Metkari .for Boys hostel Prof. Kale Mr. "
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_2_1601879470350",
+      "conditions": "@collegeinfo:(book the room in hostel)",
+      "dialog_node": "response_5_1601879674262",
+      "previous_sibling": "response_7_1601879628749"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hi"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1601878425269",
+      "conditions": "@greetings:Hello",
+      "dialog_node": "response_6_1601878856792",
+      "previous_sibling": "response_5_1601878763608"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "College canteen is on right hand side of main building"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_2_1601879470350",
+      "conditions": "@collegeinfo:canteen",
+      "dialog_node": "response_7_1601879628749",
+      "previous_sibling": "response_9_1601879595484"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Good Evening"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1601878425269",
+      "conditions": "@greetings:(Good Evening)",
+      "dialog_node": "response_8_1601878696014",
+      "previous_sibling": "response_10_1601878667315"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Five Departments in college.CSE,MECH,ENTC,ELECT and CIVIL"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_2_1601879470350",
+      "conditions": "@collegeinfo:departments",
+      "dialog_node": "response_9_1601879495909"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "College Pricipal is Dr.J.B.Dafedar"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_2_1601879470350",
+      "conditions": "@collegeinfo:prinipal",
+      "dialog_node": "response_9_1601879595484",
+      "previous_sibling": "response_9_1601879495909"
+    },
+    {
+      "type": "standard",
+      "title": "Welcome",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hello. I am College Bot . I can help you to give information about our College. N.K.Orchid College of Engineering and Technology"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "welcome",
+      "dialog_node": "Welcome"
+    }
+  ],
+  "counterexamples": [],
+  "system_settings": {
+    "off_topic": {
+      "enabled": true
+    },
+    "disambiguation": {
+      "prompt": "Did you mean:",
+      "enabled": true,
+      "randomize": true,
+      "max_suggestions": 5,
+      "suggestion_text_policy": "title",
+      "none_of_the_above_prompt": "None of the above"
+    },
+    "system_entities": {
+      "enabled": true
+    },
+    "human_agent_assist": {
+      "prompt": "Did you mean:"
+    },
+    "spelling_auto_correct": true
+  },
+  "learning_opt_out": false,
+  "name": "College Bot",
+  "language": "en",
+  "description": ""
+}
